@@ -1,0 +1,301 @@
+﻿---------------------------项目说明---------------------------------------
+1、Api.Client封装调用webapi接口的所有方法，仅供示例参数，可自由改动重构
+	其中APIHellper配置了API地址。http://trainapitest.gzlfxx.cn/api为测试环境。http://trainapi.gzlfxx.cn/api为生产环境
+2、DemoStart 调用接口具体示例
+---------------------------调用过程---------------------------------------
+1、在需要调用的项目中。引入API.Client.dll（vs会自动引入CSMP.API,Newtonsoft.Json，如果没有，手动引入下）
+2、实例化对应数据，如网段数据对象train_DataIn ，用API.Client.DataInClient.Create()方法，返回true即完成
+
+---------------------------数据Model字段说明---------------------------------------
+总体说明：
+1、所有字段均不能赋null。如没有值的数据，需针对性赋以下默认值
+	int\decimal\single\double=0
+	datetime =new DateTime(1970, 1, 1)
+	string =""
+	class =new class()
+2、所以模型中，均有ID属性，int类型的主键。所有属性(除ID外)均以f_开头。
+	针对Create操作，主键ID保留默认值0则可
+
+
+------------------------------数据Model字段说明------train_DataIn
+    public class train_DataIn
+    {
+		///检查时间
+        public DateTime? f_CheckDate { get; set; }
+		///检查类别
+        public string f_CheckType { get; set; }
+		///检查人部门
+        public string f_CheckUserDepartment { get; set; }
+		///检查人
+        public string f_CheckUserName { get; set; }
+		///检查人职务
+        public string f_CheckUserPostion { get; set; }
+		///两违内容
+        public string f_Detail { get; set; }
+		///是否动态
+        public string f_DongTai { get; set; }
+		///问题代码
+        public string f_QuestionCode { get; set; }
+		///定性定责
+        public string f_QuestionLever { get; set; }
+		///主要责任人
+        public string f_QuestionMainUser { get; set; }
+		///相关责任人
+        public string f_QuestionMainUserOther { get; set; }
+		///职务
+        public string f_QuestionMainUserPosition { get; set; }
+		///提交时间
+        public DateTime? f_SubmitDate { get; set; }
+        public string f_TrainName { get; set; }
+		///导入日期
+        public DateTime? f_UploadDate { get; set; }
+		///调用接口时的日期.ToString("yyyyMMddHHmmss")
+        public string f_UploadDateGroup { get; set; }
+		///预留字段，可保留0或将你方主键赋上去
+        public int? f_UploadID { get; set; }
+        public int ID { get; set; }
+    }
+------------------------------数据Model字段说明------train_DataUnit
+    public class train_DataUnit
+    {
+		///销号时间
+        public DateTime? f_DeleteDate { get; set; }
+		///见面谈心情况
+        public string f_DetailOfFaceTalk { get; set; }
+		///整改要求
+        public string f_DetailOfImprove { get; set; }
+		///问题描述
+        public string f_DetailOfProblem { get; set; }
+		///解决措施
+        public string f_DetailOfSloved { get; set; }
+		///实际整改时间
+        public DateTime? f_ExcuteTime { get; set; }
+		///发现人
+        public string f_FoundByUser { get; set; }
+		///发现时间
+        public DateTime? f_FoundDate { get; set; }
+		///发现单位
+        public string f_FoundUnit { get; set; }
+		///是否销号
+        public string f_IsDelete { get; set; }
+		///是否同一张发牌
+        public string f_IsSameCall { get; set; }
+		///问题编码
+        public string f_QuestionCode { get; set; }
+		///问题地点
+        public string f_QuestionTakePlace { get; set; }
+        public int? f_SerialID { get; set; }
+		///解决时间
+        public DateTime? f_SlovedTime { get; set; }
+		///提交时间
+        public DateTime? f_SubmitToSystemTime { get; set; }
+		///落实单位
+        public string f_UnitOfImplement { get; set; }
+		///责任单位
+        public string f_UnitOfResponsibility { get; set; }
+		///发牌区域
+        public string f_UnitOfTaking { get; set; }
+		///导入日期
+        public DateTime? f_UploadDate { get; set; }
+
+		///调用接口时的日期.ToString("yyyyMMddHHmmss")
+        public string f_UploadDateGroup { get; set; }
+		///预留字段，可保留0或将你方主键赋上去
+        public int? f_UploadID { get; set; }
+		///落实人
+        public string f_UserExcute { get; set; }
+		///责任人
+        public string f_UserOfResponsibility { get; set; }
+        public int ID { get; set; }
+    }
+
+------------------------------数据Model字段说明------train_GanBu
+    public class train_GanBu
+    {
+        public train_GanBu();
+
+		///【添乘检查次数】实完成
+        public int? f_AddSeatActually { get; set; }
+		///【添乘检查次数】扣分
+        public int? f_AddSeatCutDown { get; set; }
+		///【添乘检查次数】应完成
+        public int? f_AddSeatNeed { get; set; }
+		///【添乘检查次数】与指标相差
+        public string f_AddSeatPercent { get; set; }
+		///【检查班组数】实完成
+        public int? f_BanZuActually { get; set; }
+		///【检查班组数】扣分
+        public int? f_BanZuCutDown { get; set; }
+		///【检查班组数】应完成
+        public int? f_BanZuNeed { get; set; }
+		///【检查班组数】与指标相差
+        public string f_BanZuPercent { get; set; }
+		///【检查车间数】实完成
+        public int? f_CheJianActually { get; set; }
+		///【检查车间数】扣分
+        public int? f_CheJianCutDown { get; set; }
+		///【检查车间数】应完成
+        public int? f_CheJianNeed { get; set; }
+		///【检查车间数】与指标相差
+        public string f_CheJianPercent { get; set; }
+		///数据月份，开始日期
+        public DateTime? f_DateBegin { get; set; }
+		///数据月份，结束日期
+        public DateTime? f_DateEnd { get; set; }
+		///部门
+        public string f_Department { get; set; }
+		///【下现场天数】实完成
+        public int? f_DropInDaysActually { get; set; }
+		///【下现场天数】扣分
+        public int? f_DropInDaysCutDown { get; set; }
+		///【下现场天数】应完成
+        public int? f_DropInDaysNeed { get; set; }
+		///【下现场天数】与指标相差
+        public string f_DropInDaysPercent { get; set; }
+		///【发现问题量化】B类问题件数
+        public int? f_FoundB { get; set; }
+		///【发现问题量化】计件工资起点
+        public int? f_FoundStartUp { get; set; }
+		///【发现问题量化】合计检查问题
+        public int? f_FoundTotal { get; set; }
+		///数据月份
+        public DateTime? f_MonthMark { get; set; }
+		///姓名
+        public string f_Name { get; set; }
+  		///【夜间检查次数】实完成
+        public int? f_NightActually { get; set; }
+  		///【夜间检查次数】扣分
+        public int? f_NightCutDown { get; set; }
+  		///【夜间检查次数】与指标相差
+		public int? f_NightNeed { get; set; }
+  		///【夜间检查次数】与指标相差
+        public string f_NightPercent { get; set; }
+		///职务
+        public string f_Position { get; set; }
+		///合计扣分
+        public int? f_TotalCut { get; set; }
+		///合计相差
+        public string f_TotalDefferent { get; set; }
+        public DateTime? f_UploadDate { get; set; }
+        public string f_UploadDateGroup { get; set; }
+        public int? f_UploadID { get; set; }
+        public int ID { get; set; }
+    }
+------------------------------数据Model字段说明------train_BaoBao
+    public class train_BaoBao
+    {
+
+		///数据日期，开始日期
+        public DateTime? f_DateBegin { get; set; }
+		///数据日期，结束日期
+        public DateTime? f_DateEnd { get; set; }
+		///【包保检查天数】实完成
+        public int? f_DayActually { get; set; }
+		///【包保检查天数】应完成
+        public int? f_DayNeed { get; set; }
+		///部门
+        public string f_Department { get; set; }
+		///数据月份
+        public DateTime? f_MonthMark { get; set; }
+		///姓名
+        public string f_Name { get; set; }
+		///【包保夜间检查次数】实完成
+        public int? f_NightActually { get; set; }
+		///【包保夜间检查次数】应完成
+        public int? f_NightNeed { get; set; }
+		///职务
+        public string f_Position { get; set; }
+		///包保车站
+        public string f_StationBaoBao { get; set; }
+        public DateTime? f_UploadDate { get; set; }
+        public string f_UploadDateGroup { get; set; }
+        public int? f_UploadID { get; set; }
+		///【包保周末检查天数】实完成
+        public int? f_WeekActually { get; set; }
+		///【包保周末检查天数】应完成
+        public int? f_WeekNeed { get; set; }
+        public int ID { get; set; }
+    }
+------------------------------数据Model字段说明------train_DepJob
+    public class train_DepJob
+    {
+		///添加或编辑人标记，请保留默认值"byAPI"
+        public string f_AddOrEditByUserName { get; set; }
+		///录入系统时间
+        public DateTime? f_DateAdd { get; set; }
+		///开始日期
+        public DateTime? f_DateBegin { get; set; }
+		///结束时间
+        public DateTime? f_DateEnd { get; set; }
+		///完成期限
+        public DateTime? f_DateFinishDeadLine { get; set; }
+		///完成日期，未完成时使用默认日期1970-01-01
+        public DateTime? f_DateFinishDone { get; set; }
+		///最后更新时间
+        public DateTime? f_DateLastUpdate { get; set; }
+		///部门ID，没有关联数据，保留默认0即可
+        public int? f_DepID { get; set; }
+		///部门名称
+        public string f_DepName { get; set; }
+		///工作任务内容
+        public string f_Detail { get; set; }
+		///完成情况
+        public string f_DetailStatus { get; set; }
+		///指派人ID，没有关联数据，保留默认0即可
+        public int? f_FromUserID { get; set; }
+		///指派人
+        public string f_FromUserName { get; set; }
+		///将你方主键赋上去
+        public string f_IdenitiyID { get; set; }
+		///月份，注意用完整日期格式 yyyy-MM-01 00:00:00
+        public DateTime? f_Month { get; set; }
+        public int? f_ToUserID { get; set; }
+		///指定干部
+        public string f_ToUserName { get; set; }
+		///任务类别
+        public string f_TypeName { get; set; }
+		///周次
+        public int? f_WeekTime { get; set; }
+        public int ID { get; set; }
+    }
+------------------------------数据Model字段说明------train_SecurityProblem
+    public class train_SecurityProblem
+    {
+
+        public DateTime? f_AddDate { get; set; }
+		///赋0
+        public int? f_CheckDepartmentID { get; set; }
+		///赋string.Empty
+        public string f_CheckDepartmentName { get; set; }
+		///日期
+        public DateTime? f_DateDate { get; set; }
+        public string f_NO { get; set; }
+        public int? f_ProblemDepartmentID { get; set; }
+		///责任部门
+        public string f_ProblemDepartmentName { get; set; }
+		///存在问题
+        public string f_ProblemDetail { get; set; }
+		///赋0
+        public int? f_ProblemTypeID { get; set; }
+		///赋string.Empty
+        public string f_ProblemTypeName { get; set; }
+		///赋string.Empty
+        public string f_SloveCheckResult { get; set; }
+		///赋0
+        public int? f_SloveCheckUserID { get; set; }
+		///赋string.Empty
+        public string f_SloveCheckUserName { get; set; }
+		///整改期限
+        public DateTime? f_SloveDateLimit { get; set; }
+		///整改情况
+        public string f_SloveDetail { get; set; }
+		///整改责任人
+        public string f_SloveMatainUserName { get; set; }
+		///整改结果
+        public bool? f_SloveResult { get; set; }
+		///整改措施
+        public string f_SloveSoluction { get; set; }
+		///整改督办人
+        public string f_SloveSuperviseUserName { get; set; }
+        public int ID { get; set; }
+    }
